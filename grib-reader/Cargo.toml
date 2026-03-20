@@ -1,0 +1,30 @@
+[package]
+name = "grib-reader"
+description = "Pure-Rust GRIB Edition 1 and 2 decoder for weather and climate data"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+readme = "../README.md"
+documentation = "https://docs.rs/grib-reader"
+keywords = ["grib", "grib2", "weather", "climate", "decoder"]
+categories = ["science", "parser-implementations"]
+
+[dependencies]
+ndarray = { workspace = true }
+thiserror = { workspace = true }
+memmap2 = { workspace = true }
+flate2 = { version = "1", default-features = false, features = ["rust_backend"] }
+
+[dev-dependencies]
+tempfile = "3"
+
+[features]
+default = ["rayon"]
+rayon = ["dep:rayon"]
+
+[dependencies.rayon]
+version = "1"
+optional = true
