@@ -314,7 +314,9 @@ fn parse_section(
 ) -> Result<SectionRef> {
     let length_bytes = message_bytes
         .get(offset..offset + 3)
-        .ok_or(Error::Truncated { offset: offset as u64 })?;
+        .ok_or(Error::Truncated {
+            offset: offset as u64,
+        })?;
     let length = read_u24(length_bytes) as usize;
     if length < 3 {
         return Err(Error::InvalidSection {
@@ -327,7 +329,9 @@ fn parse_section(
         .checked_add(length)
         .ok_or_else(|| Error::InvalidMessage("GRIB1 section length overflow".into()))?;
     if end > payload_limit {
-        return Err(Error::Truncated { offset: offset as u64 });
+        return Err(Error::Truncated {
+            offset: offset as u64,
+        });
     }
 
     Ok(section(number, offset, length))

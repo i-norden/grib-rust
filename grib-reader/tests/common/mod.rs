@@ -38,7 +38,12 @@ pub fn build_grib1_message_with_bitmap(
     pds[4] = 7;
     pds[5] = 255;
     pds[6] = 0;
-    pds[7] = 0b1000_0000 | if bitmap_payload.is_some() { 0b0100_0000 } else { 0 };
+    pds[7] = 0b1000_0000
+        | if bitmap_payload.is_some() {
+            0b0100_0000
+        } else {
+            0
+        };
     pds[8] = 11;
     pds[9] = 100;
     pds[10..12].copy_from_slice(&850u16.to_be_bytes());
@@ -83,8 +88,7 @@ pub fn build_grib1_message_with_bitmap(
         section
     });
 
-    let total_len =
-        8 + pds.len() + gds.len() + bitmap.as_ref().map_or(0, Vec::len) + bds.len() + 4;
+    let total_len = 8 + pds.len() + gds.len() + bitmap.as_ref().map_or(0, Vec::len) + bds.len() + 4;
     let mut message = Vec::new();
     message.extend_from_slice(b"GRIB");
     message.extend_from_slice(&[
