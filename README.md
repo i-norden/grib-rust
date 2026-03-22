@@ -80,6 +80,8 @@ cargo test --all-features
 cargo test --no-default-features
 cargo check --manifest-path grib-reader/fuzz/Cargo.toml --bins
 cargo clippy --manifest-path grib-reader/fuzz/Cargo.toml --bins -- -D warnings
+./scripts/run-eccodes-parity.sh
+./scripts/run-eccodes-benchmarks.sh
 ```
 
 ## Release Checklist
@@ -97,6 +99,13 @@ git push origin v0.1.0
 - Real interoperability samples belong in `grib-reader/tests/corpus/interop/samples/`
 - Regenerate the bootstrap and fuzz seed corpora with `cargo run -p grib-reader --example sync_corpus`
 - Fuzzer entry points and usage notes live in `grib-reader/fuzz/README.md`
+
+## Dockerized ecCodes Checks
+
+- `./scripts/run-eccodes-parity.sh` builds a Docker image with `ecCodes`, compiles `tools/eccodes-reference.c`, and runs parity tests against the C library.
+- `./scripts/run-eccodes-benchmarks.sh` runs the opt-in benchmark comparison test in the same container.
+- `GRIB_READER_BENCH_ITERATIONS=50 ./scripts/run-eccodes-benchmarks.sh` overrides the default benchmark loop count.
+- `GRIB_READER_BENCH_MAX_RATIO=1.5` can be set when running the benchmark test directly to fail if Rust exceeds the configured `rust_ms / eccodes_ms` ratio.
 
 ## License
 
