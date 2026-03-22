@@ -86,7 +86,6 @@ Reference compatibility checks are intentionally outside default PR CI:
 
 ```sh
 ./scripts/run-reference-parity.sh
-./scripts/run-reference-benchmarks.sh
 ```
 
 ## Release Checklist
@@ -105,12 +104,11 @@ git push origin v0.1.0
 - Regenerate the bootstrap and fuzz seed corpora with `cargo run -p grib-reader --example sync_corpus`
 - Fuzzer entry points and usage notes live in `grib-reader/fuzz/README.md`
 
-## Dockerized ecCodes Checks
+## Reference Checks
 
-- `./scripts/run-reference-parity.sh` builds a Docker image with `ecCodes`, compiles `tools/eccodes-reference.c`, and runs the parity integration tests against the C library.
-- `./scripts/run-reference-benchmarks.sh` runs the Criterion comparison bench in the same container and writes reports to `target/criterion/`.
-- `./scripts/run-eccodes-parity.sh` and `./scripts/run-eccodes-benchmarks.sh` remain as compatibility wrappers around the shared reference script names.
-- CI benchmark numbers are smoke signals, not authoritative performance claims on shared runners.
+- `./scripts/run-reference-parity.sh` runs the Dockerized ecCodes parity suite.
+- For reference comparisons and current benchmark results against ecCodes, see
+  [docs/benchmark-report.md](docs/benchmark-report.md).
 
 ## License
 
