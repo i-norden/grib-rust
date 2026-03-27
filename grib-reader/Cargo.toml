@@ -11,6 +11,7 @@ readme = "../README.md"
 documentation = "https://docs.rs/grib-reader"
 keywords = ["grib", "grib2", "weather", "climate", "decoder"]
 categories = ["science", "parser-implementations"]
+exclude = ["tests/corpus/interop/samples/.gitkeep"]
 
 [dependencies]
 ndarray = { workspace = true }

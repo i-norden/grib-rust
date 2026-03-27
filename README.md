@@ -108,9 +108,15 @@ Reference compatibility checks are intentionally outside default PR CI:
 ## Release Checklist
 
 ```sh
-cargo publish -p grib-reader --dry-run
+git switch main
+git pull --ff-only
+git merge <release-branch>
+
+cargo package -p grib-reader
 cargo publish -p grib-reader
+
 git tag v<version>
+git push origin main
 git push origin v<version>
 ```
 
